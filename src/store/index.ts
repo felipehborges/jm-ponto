@@ -1,4 +1,4 @@
-import type { Employee } from '@/services/ponto/types'
+import type { Employee } from '@/app/api/employees/types'
 import { create } from 'zustand'
 
 type AppState = {

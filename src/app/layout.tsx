@@ -1,8 +1,9 @@
+import Providers from '@/components/providers/providers'
+import { Toaster } from '@/components/ui/toaster'
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
+import type { ReactNode } from 'react'
 import '../styles/index.css'
-import { ThemeProvider } from '@/components/theme-provider'
-import { Toaster } from '@/components/ui/toaster'
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -15,29 +16,27 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-  title: 'JM Eletro Motores',
+  title: {
+    default: 'JM Eletro Motores',
+    template: '%s | JM Eletro Motores'
+  },
   description: 'Sistema de ponto eletrônico'
 }
 
 export default function RootLayout({
   children
 }: Readonly<{
-  children: React.ReactNode
+  children: ReactNode
 }>) {
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
+        <Providers>
           {children}
           <Toaster />
-        </ThemeProvider>
+        </Providers>
       </body>
     </html>
   )

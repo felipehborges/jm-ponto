@@ -1,12 +1,14 @@
+'use client'
+
 import { Button } from '@/components/ui/button'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 import {
-  LayoutGrid,
-  LogOut,
-  Menu as LuMenu,
-  TreePalm,
-  User
-} from 'lucide-react'
+  LuLayoutGrid,
+  LuLogOut,
+  LuMenu,
+  LuTreePalm,
+  LuUser
+} from 'react-icons/lu'
 
 export default function Menu() {
   // const logout = () => {
@@ -29,7 +31,7 @@ export default function Menu() {
               // onClick={() => navigate('/admin')}
               // disabled={pathname === '/admin'}
             >
-              <LayoutGrid className="text-lg" />
+              <LuLayoutGrid className="text-lg" />
             </Button>
 
             <Button
@@ -37,7 +39,7 @@ export default function Menu() {
               // disabled={pathname === '/daysoff'}
               // onClick={() => navigate('/daysoff')}
             >
-              <TreePalm className="text-lg" />
+              <LuTreePalm className="text-lg" />
             </Button>
 
             <Button
@@ -45,7 +47,7 @@ export default function Menu() {
               // disabled={pathname === '/employees'}
               // onClick={() => navigate('/employees')}
             >
-              <User className="text-lg" />
+              <LuUser className="text-lg" />
             </Button>
 
             <Button
@@ -53,7 +55,7 @@ export default function Menu() {
               size="icon"
               // onClick={logout}
             >
-              <LogOut className="rotate-180 text-lg" />
+              <LuLogOut className="rotate-180 text-lg" />
             </Button>
           </div>
         </SheetContent>
