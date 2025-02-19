@@ -49,7 +49,7 @@ export default function Page() {
   return (
     <div className="grid lg:grid-cols-2">
       <section className="flex justify-center flex-col items-center">
-        <JmTitle />
+        <JmTitle className="text-2xl lg:text-4xl" />
 
         <p className="text-secondary-foreground">Sistema de ponto eletrônico</p>
 

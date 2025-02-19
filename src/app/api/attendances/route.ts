@@ -1,14 +1,48 @@
-const getAttendances = async () => {
-  const response = await API.get<GetAttendancesResponse>('/attendances/list')
-  return response.data
+import type { GetAttendancesResponse } from './types'
+
+export async function getAttendances(): Promise<GetAttendancesResponse> {
+  const response = await fetch(`${process.env.BASE_URL}/attendances/list`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    cache: 'no-store'
+  })
+
+  if (!response.ok) throw new Error('Falha ao buscar os registros de ponto')
+
+  return response.json()
 }
 
-const getAttendancesByEmployeeId = async (employeeId: string) => {
-  const response = await API.get<GetAttendancesByEmployeeIdResponse>(
-    `/attendances/employee/${employeeId}`
+export async function getAttendancesByEmployeeId(employeeId: string) {
+  const response = await fetch(
+    `${process.env.BASE_URL}/attendances/employee/${employeeId}`,
+    {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      cache: 'no-store'
+    }
   )
-  return response.data
+
+  if (!response.ok) throw new Error('Falha ao buscar os registros de ponto')
+
+  return response.json()
 }
 
-const deleteAttendance = async (attendanceId: string) =>
-  await API.delete(`/attendances/${attendanceId}`)
+export async function deleteAttendance(attendanceId: string) {
+  const response = await fetch(
+    `${process.env.BASE_URL}/attendances/${attendanceId}`,
+    {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+  )
+
+  if (!response.ok) throw new Error('Falha ao remover o registro de ponto')
+
+  return response.json()
+}

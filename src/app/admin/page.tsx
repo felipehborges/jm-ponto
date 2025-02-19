@@ -1,6 +1,5 @@
-import AdminCard from '@/components/card'
+import AdminCard from '@/components/admin-card'
 import EmployeesCard from '@/components/card-employees'
-import PageTemplate from '@/components/page-template'
 import { LuHammer, LuSandwich, LuUsers, LuUserX } from 'react-icons/lu'
 import type { Metadata } from 'next'
 

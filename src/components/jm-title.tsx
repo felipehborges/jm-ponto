@@ -6,7 +6,7 @@ export default function JmTitle({ className }: { className?: string }) {
   return (
     <h1
       className={cn(
-        'text-primary font-bold text-2xl lg:text-4xl transition-all duration-200 ease-in-out',
+        'text-primary font-bold transition-all duration-200 ease-in-out',
         className
       )}
     >
