@@ -5,10 +5,12 @@ import { ModeToggle } from '@/components/mode-toggle'
 import { Button } from '@/components/ui/button'
 import {
   Sheet,
+  SheetClose,
   SheetContent,
   SheetTitle,
   SheetTrigger
 } from '@/components/ui/sheet'
+import { Close } from '@radix-ui/react-dialog'
 import { usePathname, useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import {
@@ -38,7 +40,7 @@ export default function AdminNavbar() {
 
   return (
     <div
-      className={`w-full h-20 flex items-center justify-between px-4 bg-primary-foreground transition-transform duration-500 mb-2 ${
+      className={`w-full h-20 flex items-center justify-between px-4 bg-border transition-transform duration-500 mb-2 ${
         visible ? '' : '-translate-y-full'
       }`}
     >
@@ -51,6 +53,7 @@ export default function AdminNavbar() {
 
         <SheetContent side="left" className="w-24">
           <SheetTitle>{/*  */}</SheetTitle>
+
           <div className="flex h-full py-20 items-center flex-col justify-around">
             <Button
               size="icon"
@@ -62,16 +65,16 @@ export default function AdminNavbar() {
 
             <Button
               size="icon"
-              onClick={() => router.push('/daysoff')}
-              disabled={pathname === '/daysoff'}
+              onClick={() => router.push('/admin/daysoff')}
+              disabled={pathname === '/admin/daysoff'}
             >
               <LuTreePalm className="text-lg" />
             </Button>
 
             <Button
               size="icon"
-              onClick={() => router.push('/employees')}
-              disabled={pathname === '/employees'}
+              onClick={() => router.push('/admin/employees')}
+              disabled={pathname === '/admin/employees'}
             >
               <LuUser className="text-lg" />
             </Button>
@@ -94,7 +97,9 @@ export default function AdminNavbar() {
         <JmTitle className="lg:flex-1 hidden lg:block lg:text-xl" />
 
         <p className="flex-1 lg:text-center text-primary font-bold text-2xl lg:text-3xl transition-all duration-200 ease-in-out">
-          {pathname === '/admin' ? 'Dashboard' : 'Funcionários'}
+          {pathname === '/admin' && 'Dashboard'}
+          {pathname === '/admin/daysoff' && 'Days Off'}
+          {pathname === '/admin/employees' && 'Funcionários'}
         </p>
 
         <div className="flex-1 flex justify-end">

@@ -1,7 +1,7 @@
-import type { CreateDayOffProps } from './types'
+import type { CreateDayOffProps, GetDaysOffResponse } from './types'
 
-export async function getDaysOff() {
-  const response = await fetch(`${process.env.BASE_URL}/daysoff/list`, {
+export async function getDaysOff(): Promise<GetDaysOffResponse> {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/daysoff/list`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json'
@@ -15,7 +15,7 @@ export async function getDaysOff() {
 }
 
 export async function createDayOff(dayOffProps: CreateDayOffProps) {
-  const response = await fetch(`${process.env.BASE_URL}/daysoff/create`, {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/daysoff/create`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -30,7 +30,7 @@ export async function createDayOff(dayOffProps: CreateDayOffProps) {
 
 export async function deleteDayOff(dayOffId: string) {
   const response = await fetch(
-    `${process.env.BASE_URL}/daysoff/delete/${dayOffId}`,
+    `${process.env.NEXT_PUBLIC_BASE_URL}/daysoff/delete/${dayOffId}`,
     {
       method: 'DELETE',
       headers: {

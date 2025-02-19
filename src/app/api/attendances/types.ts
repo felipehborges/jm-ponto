@@ -1,8 +1,8 @@
-import type { EmployeeMin } from '../employees/types'
+import type { IEmployee } from '../employees/types'
 
-export interface Attendance {
+export interface IAttendance {
   attendanceId: string
-  employee: EmployeeMin
+  employee: IEmployee
   clockedIn: string
   lunchStart?: string
   lunchEnd?: string
@@ -15,10 +15,10 @@ export interface Attendance {
 }
 
 export interface GetAttendancesResponse {
-  result: Attendance[]
+  result: IAttendance[]
   totalRegisters: number
   totalPages: number
   currentPage: number
 }
 
-export type GetAttendancesByEmployeeIdResponse = Attendance[]
+export type GetAttendancesByEmployeeIdResponse = IAttendance[]

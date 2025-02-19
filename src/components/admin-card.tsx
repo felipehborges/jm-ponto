@@ -10,20 +10,20 @@ interface HomeCardProps {
   description: string
 }
 
-export default function AdminCard({ data, icon, description }: HomeCardProps) {
+export default function AdminCard({ ...props }: HomeCardProps) {
   return (
     <Card className="w-60 h-60 flex flex-col justify-between m-2">
       <CardHeader>
         <CardTitle>
           <div className="flex justify-between">
-            {data}
-            {icon}
+            {props.data}
+            {props.icon}
           </div>
         </CardTitle>
       </CardHeader>
 
       <CardContent className="flex flex-col justify-end">
-        <h2>{description}</h2>
+        <h2>{props.description}</h2>
       </CardContent>
     </Card>
   )

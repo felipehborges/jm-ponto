@@ -1,86 +1,154 @@
 import AdminCard from '@/components/admin-card'
-import EmployeesCard from '@/components/card-employees'
-import { LuHammer, LuSandwich, LuUsers, LuUserX } from 'react-icons/lu'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow
+} from '@/components/ui/table'
+import { formatTime, today } from '@/lib/utils'
 import type { Metadata } from 'next'
+import { LuHammer, LuSandwich, LuUsers, LuUserX } from 'react-icons/lu'
+import { getAttendances } from '../api/attendances/route'
+import type { IAttendance } from '../api/attendances/types'
+import { getEmployees } from '../api/employees/route'
+import type { IEmployee } from '../api/employees/types'
 
 export const metadata: Metadata = {
   title: 'Administrativo'
 }
 
-export default function AdminPage() {
-  // const { data: employeesData } = useQuery({
-  //   queryKey: ['apiPonto.getEmployees'],
-  //   queryFn: async () => {
-  //     const response = await apiPonto.getEmployees()
-  //     return response.result
-  //   }
-  // })
+export default async function AdminPage() {
+  const employees = await getEmployees()
+  const employeesData = employees.result
 
-  // const { data: todayAttendancesData } = useQuery({
-  //   queryKey: ['apiPonto.getAttendances'],
-  //   queryFn: async () => {
-  //     const response = await apiPonto.getAttendances()
-  //     const data = response.result
-  //     const today = new Date().toISOString().split('T')[0] // 'YYYY-MM-DD'
-  //     const todaysSchedules = Array.isArray(data)
-  //       ? data.filter((item) => item.clockedIn.startsWith(today))
-  //       : [data]
-  //     return todaysSchedules
-  //   }
-  // })
+  const attendances = await getAttendances()
+  const attendancesData = attendances.result
 
-  // const lunchTime = () => {
-  //   const employeesLunching: EmployeeMin[] = []
-  //   if (todayAttendancesData) {
-  //     todayAttendancesData.map((attendance: Attendance) => {
-  //       if (attendance?.lunchStart && !attendance?.lunchEnd) {
-  //         employeesLunching.push(attendance?.employee)
-  //       }
-  //     })
-  //   }
-  //   return employeesLunching
-  // }
+  const todayAttendances = () => {
+    const today = new Date().toISOString().split('T')[0] // 'YYYY-MM-DD'
+
+    const todaysSchedules = Array.isArray(attendancesData)
+      ? attendancesData.filter((item) => item.clockedIn.startsWith(today))
+      : [attendancesData]
+
+    return todaysSchedules
+  }
+
+  const employeesLunching = () => {
+    const employees: IEmployee[] = []
+
+    const todayAtts = todayAttendances()
+
+    if (todayAtts) {
+      todayAtts.map((attendance: IAttendance) => {
+        if (attendance?.lunchStart && !attendance?.lunchEnd)
+          employees.push(attendance?.employee)
+      })
+    }
+
+    return employees
+  }
+
+  const employeeStatus = (item: IAttendance) => {
+    const clockedIn = item.clockedIn
+    const lunchStart = item.lunchStart
+    const lunchEnd = item.lunchEnd
+    const clockedOut = item.clockedOut
+
+    if (clockedIn && !clockedOut) {
+      if (lunchStart && !lunchEnd) return 'Em horário de almoço'
+      return 'Trabalhando'
+    }
+
+    if (clockedIn && lunchStart && lunchEnd && clockedOut) {
+      return 'Expediente finalizado'
+    }
+  }
 
   return (
-    <>ADMIN PAGE</>
-    // <PageTemplate navbar footer={false}>
-    //   <div className="lg:flex w-full">
-    //     <EmployeesCard className="min-w-[60%]" />
+    <div className="lg:flex w-full">
+      <Card className="mx-4 mt-4 max-h-max">
+        <CardContent>
+          <CardHeader>
+            <CardTitle>
+              <div className="flex items-center justify-between">
+                <h2 className="mr-4">{`Hoje - ${today}`}</h2>
+              </div>
+            </CardTitle>
+          </CardHeader>
 
-    //     <section className="flex-wrap w-full flex p-2">
-    //       <AdminCard
-    //         data={employeesData?.length}
-    //         icon={<LuUsers />}
-    //         description="Total de funcionários"
-    //       />
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead className={employees && 'lg:min-w-50'}>
+                  Nome
+                </TableHead>
+                <TableHead>Entrada</TableHead>
+                <TableHead>Saída</TableHead>
+                <TableHead>Entrada</TableHead>
+                <TableHead>Saída</TableHead>
+                <TableHead className={attendances && 'lg:min-w-40'}>
+                  Status
+                </TableHead>
+              </TableRow>
+            </TableHeader>
 
-    //       <AdminCard
-    //         data={todayAttendancesData?.length}
-    //         icon={<LuHammer />}
-    //         description="Trabalhando"
-    //       />
+            <TableBody>
+              {attendancesData?.map((attendance: IAttendance) => (
+                <TableRow key={attendance?.attendanceId}>
+                  <TableCell>{attendance?.employee?.name}</TableCell>
+                  <TableCell>{formatTime(attendance?.clockedIn)}</TableCell>
+                  <TableCell>
+                    {formatTime(attendance?.lunchStart || '')}
+                  </TableCell>
+                  <TableCell>
+                    {formatTime(attendance?.lunchEnd || '')}
+                  </TableCell>
+                  <TableCell>
+                    {formatTime(attendance?.clockedOut || '')}
+                  </TableCell>
+                  <TableCell>{employeeStatus(attendance)}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </CardContent>
+      </Card>
 
-    //       <AdminCard
-    //         data={
-    //           (employeesData?.length ?? 0) - (todayAttendancesData?.length ?? 0)
-    //         }
-    //         icon={<LuUserX />}
-    //         description="Inconsistências"
-    //       />
+      <section className="flex-wrap w-full flex p-2">
+        <AdminCard
+          data={employeesData?.length}
+          icon={<LuUsers />}
+          description="Total de funcionários"
+        />
 
-    //       <AdminCard
-    //         data={lunchTime().length}
-    //         icon={<LuSandwich />}
-    //         description="Em horário de almoço"
-    //       />
+        <AdminCard
+          data={todayAttendances?.length}
+          icon={<LuHammer />}
+          description="Trabalhando"
+        />
 
-    //       {/* <AdminCard
-    //       data={"{{ferias}}"}
-    //       icon={<LuBaggageClaim />}
-    //       description="Em período de férias"
-    //     /> */}
-    //     </section>
-    //   </div>
-    // </PageTemplate>
+        <AdminCard
+          data={(employeesData?.length ?? 0) - (todayAttendances?.length ?? 0)}
+          icon={<LuUserX />}
+          description="Inconsistências"
+        />
+
+        <AdminCard
+          data={employeesLunching().length}
+          icon={<LuSandwich />}
+          description="Em horário de almoço"
+        />
+
+        {/* <AdminCard
+          data={"{{ferias}}"}
+          icon={<LuBaggageClaim />}
+          description="Em período de férias"
+        /> */}
+      </section>
+    </div>
   )
 }

@@ -1,3 +1,4 @@
+import { getEmployees } from '@/app/api/employees/route'
 import {
   Table,
   TableHeader,
@@ -6,14 +7,10 @@ import {
   TableBody,
   TableCell
 } from '@/components/ui/table'
-import type { Employee } from '../api/employees/types'
-import { getEmployees } from '../api/employees/route'
 
 export default async function EmployeesPage() {
-  // Fetch data on the server using the new built-in fetch method via our helper function
-  const data = await getEmployees()
-  // Assume the API returns an object with a "result" property that holds the employees array
-  const employeesData: Employee[] = data.result
+  const employees = await getEmployees()
+  const employeesData = employees.result
 
   return (
     <div className="mx-auto max-w-screen-sm pt-10 lg:max-w-screen-md xl:max-w-screen-lg 2xl:max-w-screen-xl transition-all duration-500 ease-in-out">

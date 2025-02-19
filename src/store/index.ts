@@ -1,4 +1,4 @@
-import type { Employee } from '@/app/api/employees/types'
+import type { IEmployeeDetails } from '@/app/api/employees/types'
 import { create } from 'zustand'
 
 type AppState = {
@@ -8,8 +8,8 @@ type AppState = {
   accessToken: string | null
   setAccessToken(accessToken: string | null): void
 
-  employees: Employee[]
-  setEmployees: (employees: Employee[]) => void
+  employees: IEmployeeDetails[]
+  setEmployees: (employees: IEmployeeDetails[]) => void
 }
 
 export const useStore = create<AppState>()((set) => ({

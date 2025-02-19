@@ -1,11 +1,11 @@
-export interface DayOff {
+export interface IDayOff {
   id: string
   reason: string
   date: string
 }
 
 export interface GetDaysOffResponse {
-  result: DayOff[]
+  result: IDayOff[]
   totalRegisters: number
   totalPages: number
   currentPage: number

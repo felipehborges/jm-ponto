@@ -1,10 +1,10 @@
-export interface EmployeeMin {
+export interface IEmployee {
   id: string
   name: string
   rfid: string
 }
 
-export interface Employee {
+export interface IEmployeeDetails {
   id: string
   name: string
   position: string
@@ -16,7 +16,7 @@ export interface Employee {
 }
 
 export interface GetEmployeesResponse {
-  result: Employee[]
+  result: IEmployeeDetails[]
   totalRegisters: number
   totalPages: number
   currentPage: number
