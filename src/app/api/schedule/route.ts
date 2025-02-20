@@ -5,7 +5,7 @@ import type {
   RegisterStartTimeProps
 } from './types'
 
-export async function registerStartTime(props: RegisterStartTimeProps) {
+async function registerStartTime(props: RegisterStartTimeProps) {
   const response = await fetch(`${process.env.BASE_URL}/schedules/clockedIn`, {
     method: 'POST',
     headers: {
@@ -19,7 +19,7 @@ export async function registerStartTime(props: RegisterStartTimeProps) {
   return response.json()
 }
 
-export async function registerLunchStart(props: RegisterLunchStartProps) {
+async function registerLunchStart(props: RegisterLunchStartProps) {
   const response = await fetch(`${process.env.BASE_URL}/schedules/lunchstart`, {
     method: 'POST',
     headers: {
@@ -33,7 +33,7 @@ export async function registerLunchStart(props: RegisterLunchStartProps) {
   return response.json()
 }
 
-export async function registerLunchEnd(props: RegisterLunchEndProps) {
+async function registerLunchEnd(props: RegisterLunchEndProps) {
   const response = await fetch(`${process.env.BASE_URL}/schedules/lunchEnd`, {
     method: 'POST',
     headers: {
@@ -47,7 +47,7 @@ export async function registerLunchEnd(props: RegisterLunchEndProps) {
   return response.json()
 }
 
-export async function registerClockedOut(props: RegisterClockedOutProps) {
+async function registerClockedOut(props: RegisterClockedOutProps) {
   const response = await fetch(`${process.env.BASE_URL}/schedules/clockedOut`, {
     method: 'POST',
     headers: {
@@ -59,4 +59,11 @@ export async function registerClockedOut(props: RegisterClockedOutProps) {
   if (!response.ok) throw new Error('Falha ao registrar fim de expediente')
 
   return response.json()
+}
+
+export const apiSchedules = {
+  registerStartTime,
+  registerLunchStart,
+  registerLunchEnd,
+  registerClockedOut
 }

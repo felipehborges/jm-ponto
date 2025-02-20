@@ -3,7 +3,7 @@ import type {
   GetEmployeesResponse
 } from '@/app/api/employees/types'
 
-export async function getEmployees(): Promise<GetEmployeesResponse> {
+async function getEmployees(): Promise<GetEmployeesResponse> {
   const response = await fetch(`${process.env.BASE_URL}/employee/list`, {
     method: 'GET',
     headers: {
@@ -17,7 +17,7 @@ export async function getEmployees(): Promise<GetEmployeesResponse> {
   return response.json()
 }
 
-export async function getEmployeeById(employeeId: string) {
+async function getEmployeeById(employeeId: string) {
   const response = await fetch(
     `${process.env.BASE_URL}/employee/${employeeId}`,
     {
@@ -34,7 +34,7 @@ export async function getEmployeeById(employeeId: string) {
   return response.json()
 }
 
-export async function createEmployee(newEmployee: CreateEmployeeProps) {
+async function createEmployee(newEmployee: CreateEmployeeProps) {
   const response = await fetch(`${process.env.BASE_URL}/employee/create`, {
     method: 'POST',
     headers: {
@@ -48,7 +48,7 @@ export async function createEmployee(newEmployee: CreateEmployeeProps) {
   return response.json()
 }
 
-export async function deleteEmployee(employeeId: string) {
+async function deleteEmployee(employeeId: string) {
   const response = await fetch(
     `${process.env.BASE_URL}/employee/delete/${employeeId}`,
     {
@@ -62,4 +62,11 @@ export async function deleteEmployee(employeeId: string) {
   if (!response.ok) throw new Error('Falha ao remover o funcionário')
 
   return response.json()
+}
+
+export const apiEmployees = {
+  getEmployees,
+  getEmployeeById,
+  createEmployee,
+  deleteEmployee
 }

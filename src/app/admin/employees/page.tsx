@@ -1,4 +1,4 @@
-import { getEmployees } from '@/app/api/employees/route'
+import { apiEmployees } from '@/app/api/employees/route'
 import {
   Table,
   TableHeader,
@@ -9,7 +9,7 @@ import {
 } from '@/components/ui/table'
 
 export default async function EmployeesPage() {
-  const employees = await getEmployees()
+  const employees = await apiEmployees.getEmployees()
   const employeesData = employees.result
 
   return (

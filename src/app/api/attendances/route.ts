@@ -1,6 +1,6 @@
 import type { GetAttendancesResponse } from './types'
 
-export async function getAttendances(): Promise<GetAttendancesResponse> {
+async function getAttendances(): Promise<GetAttendancesResponse> {
   const response = await fetch(`${process.env.BASE_URL}/attendances/list`, {
     method: 'GET',
     headers: {
@@ -14,7 +14,7 @@ export async function getAttendances(): Promise<GetAttendancesResponse> {
   return response.json()
 }
 
-export async function getAttendancesByEmployeeId(employeeId: string) {
+async function getAttendancesByEmployeeId(employeeId: string) {
   const response = await fetch(
     `${process.env.BASE_URL}/attendances/employee/${employeeId}`,
     {
@@ -31,7 +31,7 @@ export async function getAttendancesByEmployeeId(employeeId: string) {
   return response.json()
 }
 
-export async function deleteAttendance(attendanceId: string) {
+async function deleteAttendance(attendanceId: string) {
   const response = await fetch(
     `${process.env.BASE_URL}/attendances/${attendanceId}`,
     {
@@ -45,4 +45,10 @@ export async function deleteAttendance(attendanceId: string) {
   if (!response.ok) throw new Error('Falha ao remover o registro de ponto')
 
   return response.json()
+}
+
+export const apiAttendances = {
+  getAttendances,
+  getAttendancesByEmployeeId,
+  deleteAttendance
 }

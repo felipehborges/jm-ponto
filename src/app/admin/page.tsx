@@ -11,9 +11,9 @@ import {
 import { formatTime, today } from '@/lib/utils'
 import type { Metadata } from 'next'
 import { LuHammer, LuSandwich, LuUsers, LuUserX } from 'react-icons/lu'
-import { getAttendances } from '../api/attendances/route'
+import { apiAttendances } from '../api/attendances/route'
 import type { IAttendance } from '../api/attendances/types'
-import { getEmployees } from '../api/employees/route'
+import { apiEmployees } from '../api/employees/route'
 import type { IEmployee } from '../api/employees/types'
 
 export const metadata: Metadata = {
@@ -21,10 +21,10 @@ export const metadata: Metadata = {
 }
 
 export default async function AdminPage() {
-  const employees = await getEmployees()
+  const employees = await apiEmployees.getEmployees()
   const employeesData = employees.result
 
-  const attendances = await getAttendances()
+  const attendances = await apiAttendances.getAttendances()
   const attendancesData = attendances.result
 
   const todayAttendances = () => {

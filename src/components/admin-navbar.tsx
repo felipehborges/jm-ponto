@@ -5,12 +5,10 @@ import { ModeToggle } from '@/components/mode-toggle'
 import { Button } from '@/components/ui/button'
 import {
   Sheet,
-  SheetClose,
   SheetContent,
   SheetTitle,
   SheetTrigger
 } from '@/components/ui/sheet'
-import { Close } from '@radix-ui/react-dialog'
 import { usePathname, useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import {
@@ -52,7 +50,7 @@ export default function AdminNavbar() {
         </SheetTrigger>
 
         <SheetContent side="left" className="w-24">
-          <SheetTitle>{/*  */}</SheetTitle>
+          <SheetTitle className="hidden">.</SheetTitle>
 
           <div className="flex h-full py-20 items-center flex-col justify-around">
             <Button
@@ -83,8 +81,8 @@ export default function AdminNavbar() {
               variant="destructive"
               size="icon"
               onClick={() => {
-                // Implement logout logic here if needed
-                router.push('/auth/login')
+                // TODO: Implement logout logic
+                router.push('/')
               }}
             >
               <LuLogOut className="rotate-180 text-lg" />

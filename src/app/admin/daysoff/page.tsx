@@ -1,10 +1,6 @@
 'use client'
 
-import {
-  createDayOff,
-  deleteDayOff,
-  getDaysOff
-} from '@/app/api/days-off/route'
+import { apiDaysOff } from '@/app/api/days-off/route'
 import type { CreateDayOffProps, IDayOff } from '@/app/api/days-off/types'
 import {
   AlertDialog,
@@ -72,9 +68,9 @@ export default function DaysOffPage() {
   })
 
   const daysOff = useQuery({
-    queryKey: ['getDaysOff'],
+    queryKey: ['apiDaysOff.getDaysOff'],
     queryFn: async () => {
-      const response = await getDaysOff()
+      const response = await apiDaysOff.getDaysOff()
       return response?.result
     }
   })
@@ -86,9 +82,9 @@ export default function DaysOffPage() {
   }
 
   const createMutation = useMutation({
-    mutationKey: ['createDayOff'],
+    mutationKey: ['apiDaysOff.createDayOff'],
     mutationFn: async (dayOffProps: CreateDayOffProps) => {
-      const response = await createDayOff({ ...dayOffProps })
+      const response = await apiDaysOff.createDayOff({ ...dayOffProps })
       return response
     },
     onSuccess: () => {
@@ -99,9 +95,9 @@ export default function DaysOffPage() {
   })
 
   const deleteMutation = useMutation({
-    mutationKey: ['deleteDayOff'],
+    mutationKey: ['apiDaysOff.deleteDayOff'],
     mutationFn: async (dayOffId: string) => {
-      const response = await deleteDayOff(dayOffId)
+      const response = await apiDaysOff.deleteDayOff(dayOffId)
       return response
     },
     onSuccess: () => {
