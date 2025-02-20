@@ -32,7 +32,9 @@ export default function AdminNavbar() {
       setVisible(currentScrollY < lastScrollY || currentScrollY <= 0)
       setLastScrollY(currentScrollY)
     }
+
     window.addEventListener('scroll', handleScroll)
+
     return () => window.removeEventListener('scroll', handleScroll)
   }, [lastScrollY])
 

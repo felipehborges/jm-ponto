@@ -16,10 +16,6 @@ import type { IAttendance } from '../api/attendances/types'
 import { apiEmployees } from '../api/employees/route'
 import type { IEmployee } from '../api/employees/types'
 
-export const metadata: Metadata = {
-  title: 'Administrativo'
-}
-
 export default async function AdminPage() {
   const employees = await apiEmployees.getEmployees()
   const employeesData = employees.result

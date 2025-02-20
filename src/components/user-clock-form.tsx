@@ -212,8 +212,8 @@ export default function ClockForm() {
 
   useEffect(() => {
     const checkFocus = () => {
-      if (inputRef.current && inputRef.current !== document.activeElement) {
-        inputRef.current.focus()
+      if (inputRef?.current && inputRef?.current !== document.activeElement) {
+        inputRef?.current.focus()
       }
     }
     const intervalId = setInterval(checkFocus, 100)
@@ -224,7 +224,6 @@ export default function ClockForm() {
   return (
     <div>
       <Input
-        ref={inputRef}
         placeholder="RFID"
         autoFocus
         className="w-full"
@@ -232,6 +231,7 @@ export default function ClockForm() {
         onChange={handleChange}
         onKeyDown={handleRfidSubmit}
         value={rfidInput}
+        ref={inputRef}
       />
 
       <RadioGroup className="flex flex-col space-y-4 py-6">

@@ -15,17 +15,19 @@ export default function UserNavbar() {
       setVisible(currentScrollY < lastScrollY || currentScrollY <= 0)
       setLastScrollY(currentScrollY)
     }
+
     window.addEventListener('scroll', handleScroll)
+
     return () => window.removeEventListener('scroll', handleScroll)
   }, [lastScrollY])
 
   return (
     <div
-      className={`w-full h-20 flex items-center justify-between px-8 bg-border border-b-1 border-primary transition-transform duration-500 ${
+      className={`w-full h-20 flex items-center justify-between px-4 py-2 bg-border border-b-1 transition-transform duration-500 ${
         visible ? '' : '-translate-y-full'
       }`}
     >
-      <div>
+      <div className="lg:ml-4">
         <JmTitle />
         <p className="text-sm">{today}</p>
       </div>
