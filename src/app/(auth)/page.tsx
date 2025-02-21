@@ -1,5 +1,3 @@
-'use client'
-
 import JmTitle from '@/components/jm-title'
 import { Button } from '@/components/ui/button'
 import {
@@ -20,9 +18,12 @@ import { useForm } from 'react-hook-form'
 import { FaWhatsapp } from 'react-icons/fa'
 import { LuLoaderCircle } from 'react-icons/lu'
 import { toast } from 'sonner'
-import { authenticateAction } from '../actions/authenticate'
+import { auth, signIn } from '@/auth'
+import { login } from '@/lib/actions/auth'
+import { authenticateAction } from '@/lib/actions/authenticate'
 
-export default function Page() {
+export default async function Page() {
+  const session = await auth()
   const router = useRouter()
 
   const form = useForm<LoginFormData>({
@@ -33,7 +34,7 @@ export default function Page() {
     }
   })
 
-  async function onSubmitHandler(data: LoginFormData) {
+  const onSubmitHandler = async (data: LoginFormData) => {
     try {
       const userData = await authenticateAction({
         email: data.email,
@@ -63,6 +64,10 @@ export default function Page() {
       </section>
 
       <section className="flex items-center justify-center">
+        <Button onClick={() => login()} className="mt-4 w-32">
+          Entrar com GitHub
+        </Button>
+
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmitHandler)}
