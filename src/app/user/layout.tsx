@@ -1,6 +1,6 @@
-import UserNavbar from '@/components/user-navbar'
 import type { Metadata } from 'next'
 import type { ReactNode } from 'react'
+import UserNavbar from './components/user-navbar'
 
 export const metadata: Metadata = {
   title: 'Usuário'

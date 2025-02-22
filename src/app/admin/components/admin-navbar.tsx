@@ -1,6 +1,7 @@
 'use client'
 
 import JmTitle from '@/components/jm-title'
+import LogoutButton from '@/components/logout-button'
 import { ModeToggle } from '@/components/mode-toggle'
 import { Button } from '@/components/ui/button'
 import {
@@ -11,13 +12,7 @@ import {
 } from '@/components/ui/sheet'
 import { usePathname, useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import {
-  LuLayoutGrid,
-  LuLogOut,
-  LuMenu,
-  LuTreePalm,
-  LuUser
-} from 'react-icons/lu'
+import { LuLayoutGrid, LuMenu, LuTreePalm, LuUser } from 'react-icons/lu'
 
 export default function AdminNavbar() {
   const router = useRouter()
@@ -79,16 +74,7 @@ export default function AdminNavbar() {
               <LuUser className="text-lg" />
             </Button>
 
-            <Button
-              variant="destructive"
-              size="icon"
-              onClick={() => {
-                // TODO: Implement logout logic
-                router.push('/')
-              }}
-            >
-              <LuLogOut className="rotate-180 text-lg" />
-            </Button>
+            <LogoutButton />
           </div>
         </SheetContent>
       </Sheet>

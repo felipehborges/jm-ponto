@@ -1,4 +1,3 @@
-import AdminCard from '@/components/admin-card'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import {
   Table,
@@ -9,19 +8,19 @@ import {
   TableRow
 } from '@/components/ui/table'
 import { formatTime, today } from '@/lib/utils'
-import type { Metadata } from 'next'
 import { LuHammer, LuSandwich, LuUsers, LuUserX } from 'react-icons/lu'
 import { apiAttendances } from '../api/attendances/route'
 import type { IAttendance } from '../api/attendances/types'
 import { apiEmployees } from '../api/employees/route'
 import type { IEmployee } from '../api/employees/types'
+import AdminCard from './components/admin-card'
 
 export default async function AdminPage() {
   const employees = await apiEmployees.getEmployees()
-  const employeesData = employees.result
+  const employeesData = employees?.result
 
   const attendances = await apiAttendances.getAttendances()
-  const attendancesData = attendances.result
+  const attendancesData = attendances?.result
 
   const todayAttendances = () => {
     const today = new Date().toISOString().split('T')[0] // 'YYYY-MM-DD'
