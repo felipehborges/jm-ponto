@@ -14,11 +14,11 @@ export interface IAttendance {
   updatedAt: string
 }
 
-export interface GetAttendancesResponse {
+export interface GetAllAttendancesResponse {
   result: IAttendance[]
   totalRegisters: number
   totalPages: number
   currentPage: number
 }
 
-export type GetAttendancesByEmployeeIdResponse = IAttendance[]
+// export type GetAttendancesByEmployeeIdResponse = IAttendance[]

@@ -27,7 +27,7 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 
-export default function CreateDayOffForm() {
+export default function CreateDayOffDialog() {
   const [isOpen, setIsOpen] = useState(false)
 
   const form = useForm<DaysOffFormData>({

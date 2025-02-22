@@ -10,7 +10,7 @@ import {
   FormMessage
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { loginAction } from '@/lib/actions/login'
+import { loginAction } from '@/lib/actions/auth/login'
 import { loginSchema, type LoginFormData } from '@/schemas/login'
 import { zodResolver } from '@hookform/resolvers/zod'
 import Link from 'next/link'
@@ -51,7 +51,7 @@ export default function LoginForm() {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmitHandler)}
-          className="lg:pt-10 mt-10 gap-4 flex-1 lg:w-1/2 flex justify-center flex-col p-4 items-center w-full"
+          className="lg:pt-10 mt-10 gap-2 flex-1 lg:w-1/2 flex justify-center flex-col p-4 items-center w-full"
         >
           <FormField
             control={form.control}
@@ -95,7 +95,7 @@ export default function LoginForm() {
           />
 
           <Button
-            className="mt-4 w-32"
+            className="mt-4 w-40"
             disabled={form.formState.isSubmitting}
             type="submit"
           >

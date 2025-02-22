@@ -46,7 +46,7 @@ export default function DeleteDayOffButton({
 
           <AlertDialogAction
             className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
-            onClick={() => apiDaysOff.deleteDayOff(props?.dayOff?.id)}
+            onClick={() => apiDaysOff.deleteDayOff(props.dayOff?.id)}
           >
             Excluir
           </AlertDialogAction>

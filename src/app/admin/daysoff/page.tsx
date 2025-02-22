@@ -9,7 +9,7 @@ import {
   TableRow
 } from '@/components/ui/table'
 import { formatDayMonth } from '@/lib/utils'
-import CreateDayOffForm from './components/add-dayoff-form'
+import CreateDayOffDialog from './components/add-dayoff-form'
 import DeleteDayOffButton from './components/delete-dayoff-button'
 
 export default async function DaysOffPage() {
@@ -18,7 +18,7 @@ export default async function DaysOffPage() {
   return (
     <>
       <header className="w-full flex justify-center items-center pt-4 pb-8">
-        <CreateDayOffForm />
+        <CreateDayOffDialog />
       </header>
 
       <div className="mx-auto max-screen-sm lg:max-w-screen-md xl:max-w-screen-lg 2xl:max-w-screen-xl px-4 transition-all duration-500 ease-in-out">

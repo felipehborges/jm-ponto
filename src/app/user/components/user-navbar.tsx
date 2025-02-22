@@ -35,6 +35,7 @@ export default function UserNavbar() {
 
       <div className="flex items-center gap-2">
         <ModeToggle />
+
         <LogoutButton />
       </div>
     </div>

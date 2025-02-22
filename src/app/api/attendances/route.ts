@@ -1,6 +1,6 @@
-import type { GetAttendancesResponse } from './types'
+import type { GetAllAttendancesResponse } from './types'
 
-async function getAttendances(): Promise<GetAttendancesResponse> {
+async function getAttendances(): Promise<GetAllAttendancesResponse> {
   const response = await fetch(`${process.env.BASE_URL}/attendances/list`, {
     method: 'GET',
     headers: {
