@@ -17,7 +17,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { FaWhatsapp } from 'react-icons/fa'
-import { LuLoaderCircle } from 'react-icons/lu'
+import { LuCheck, LuLoaderCircle } from 'react-icons/lu'
 import { toast } from 'sonner'
 
 export default function LoginForm() {
@@ -95,14 +95,26 @@ export default function LoginForm() {
           />
 
           <Button
-            className="mt-4 w-40"
+            className="mt-4 w-44"
             disabled={form.formState.isSubmitting}
             type="submit"
           >
             {form.formState.isSubmitting ? (
-              <LuLoaderCircle className="animate-spin" />
+              <>
+                <LuLoaderCircle className="animate-spin" />
+                Conectando...
+              </>
             ) : (
-              'Login'
+              <>
+                {form.formState.isSubmitted ? (
+                  <>
+                    <LuCheck />
+                    Conectado
+                  </>
+                ) : (
+                  'Login'
+                )}
+              </>
             )}
           </Button>
 
