@@ -11,11 +11,12 @@ export default async function LoginPage() {
         <p className="text-secondary-foreground">Sistema de ponto eletrônico</p>
 
         <Image
+          className="lg:w-auto -mt-20"
           src="/gifs/login.gif"
           alt="jm-gif"
           width={400}
           height={400}
-          className="lg:w-auto -mt-20"
+          unoptimized
         />
       </section>
 
