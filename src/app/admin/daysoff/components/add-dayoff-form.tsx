@@ -25,6 +25,7 @@ import { type DaysOffFormData, daysOffSchema } from '@/schemas/daysoff'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { LuLoaderCircle, LuPlus } from 'react-icons/lu'
 import { toast } from 'sonner'
 
 export default function CreateDayOffDialog() {
@@ -34,50 +35,15 @@ export default function CreateDayOffDialog() {
     resolver: zodResolver(daysOffSchema),
     defaultValues: {
       dayOffName: '',
-      dayOffDate: new Date()
+      dayOffDate: undefined
     }
   })
 
-  // const daysOff = useQuery({
-  //   queryKey: ['apiDaysOff.getDaysOff'],
-  //   queryFn: async () => {
-  //     const response = await apiDaysOff.getDaysOff()
-  //     return response?.result
-  //   }
-  // })
-
   const closeDialog = () => {
     form.reset()
-    // daysOff.refetch()
     apiDaysOff.getDaysOff()
     setIsOpen(false)
   }
-
-  // const createMutation = useMutation({
-  //   mutationKey: ['apiDaysOff.createDayOff'],
-  //   mutationFn: async (dayOffProps: CreateDayOffProps) => {
-  //     const response = await apiDaysOff.createDayOff({ ...dayOffProps })
-  //     return response
-  //   },
-  //   onSuccess: () => {
-  //     closeDialog()
-  //     toast.success('Day off cadastrado com sucesso!')
-  //   },
-  //   onError: (error) => toast.error(error.message)
-  // })
-
-  // const onSubmitHandler = async (data: DaysOffFormData) => {
-  //   const dayOffData: CreateDayOffProps = {
-  //     reason: data.dayOffName,
-  //     date: data.dayOffDate.toISOString()
-  //   }
-  //   try {
-  //     await createMutation.mutateAsync(dayOffData)
-  //   } catch (error) {
-  //     console.error('Failed to submit form', error)
-  //     toast.error('Erro ao cadastrar day off')
-  //   }
-  // }
 
   const onSubmitHandler = async (data: DaysOffFormData) => {
     const dayOffData: CreateDayOffProps = {
@@ -90,8 +56,10 @@ export default function CreateDayOffDialog() {
       toast.success('Day off cadastrado com sucesso!')
       form.reset()
       closeDialog()
-    } catch (err) {
-      console.error('Erro ao criar day off:', err)
+    } catch (error) {
+      toast.error(`Erro ao criar day off: ${error}`)
+    } finally {
+      form.reset()
     }
   }
 
@@ -104,12 +72,15 @@ export default function CreateDayOffDialog() {
       }}
     >
       <DialogTrigger asChild>
-        <Button onClick={() => setIsOpen(true)}>Adicionar novo feriado</Button>
+        <Button onClick={() => setIsOpen(true)}>
+          <LuPlus />
+          Adicionar novo day off
+        </Button>
       </DialogTrigger>
 
       <DialogContent aria-describedby={undefined}>
         <DialogHeader>
-          <DialogTitle>Cadastrar novo day off</DialogTitle>
+          <DialogTitle>Novo day off</DialogTitle>
         </DialogHeader>
 
         <Form {...form}>
@@ -145,15 +116,20 @@ export default function CreateDayOffDialog() {
                 )}
               />
             </div>
+
             <DialogFooter>
-              {/* <Button type="submit" disabled={createMutation.isPending}>
-                {createMutation.isPending ? (
+              <Button
+                type="submit"
+                disabled={
+                  form.formState.isSubmitting || !form.formState.isValid
+                }
+              >
+                {form.formState.isSubmitting ? (
                   <LuLoaderCircle className="animate-spin" />
                 ) : (
-                  'Enviar'
+                  'Salvar'
                 )}
-              </Button> */}
-              <Button type="submit">Enviar</Button>
+              </Button>
             </DialogFooter>
           </form>
         </Form>

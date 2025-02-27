@@ -32,14 +32,14 @@ export function DatePicker({
     <Popover>
       <PopoverTrigger asChild>
         <Button
-          variant={'outline'}
+          variant="outline"
           className={cn(
             'min-w-[280px] w-full justify-start text-left font-normal',
             !value && 'text-muted-foreground'
           )}
         >
           <LuCalendar className="mr-2 h-4 w-4" />
-          {value ? format(value, 'PPP') : <span>Pick a date</span>}
+          {value ? format(value, 'PPP') : <span>Escolha uma data</span>}
         </Button>
       </PopoverTrigger>
 

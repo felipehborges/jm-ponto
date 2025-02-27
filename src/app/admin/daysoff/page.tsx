@@ -17,11 +17,11 @@ export default async function DaysOffPage() {
   // TODO: refetch data after create or delete
   return (
     <>
-      <header className="w-full flex justify-center items-center pt-4 pb-8">
+      <header className="w-full flex justify-center items-center pt-6 pb-8">
         <CreateDayOffDialog />
       </header>
 
-      <div className="mx-auto max-screen-sm lg:max-w-screen-md xl:max-w-screen-lg 2xl:max-w-screen-xl px-4 transition-all duration-500 ease-in-out">
+      <div className="mx-auto max-screen-sm lg:max-w-screen-md xl:max-w-screen-md 2xl:max-w-screen-lg px-4 transition-all duration-500 ease-in-out pb-4">
         <Table>
           <TableHeader>
             <TableRow>
