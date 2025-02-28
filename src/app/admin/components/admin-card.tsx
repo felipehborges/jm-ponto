@@ -3,14 +3,14 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import type { JSX } from 'react'
 
-interface HomeCardProps {
+interface AdminCardProps {
   // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   data: any
   icon: JSX.Element
   description: string
 }
 
-export default function AdminCard({ ...props }: HomeCardProps) {
+export default function AdminCard({ ...props }: AdminCardProps) {
   return (
     <Card className="w-60 h-60 flex flex-col justify-between m-2">
       <CardHeader>

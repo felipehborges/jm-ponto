@@ -10,14 +10,15 @@ import {
   TableCell
 } from '@/components/ui/table'
 import ButtonEmployeeDetails from './components/button-employee-details'
+import type { IEmployeeDetails } from '@/app/api/employees/types'
 
 export default async function EmployeesPage() {
   const employees = await apiEmployees.getEmployees()
   const employeesData = employees.result
 
   return (
-    <div className="mx-auto max-w-screen-sm pt-6 lg:max-w-screen-md xl:max-w-screen-lg 2xl:max-w-screen-xl transition-all duration-500 ease-in-out">
-      <Table className="text-base">
+    <div className="pt-6 mx-auto max-w-screen 2xl:max-w-screen-xl transition-all duration-500 ease-in-out">
+      <Table className="text-sm lg:text-base">
         <TableHeader>
           <TableRow>
             <TableHead className="text-center">ID</TableHead>
@@ -35,9 +36,11 @@ export default async function EmployeesPage() {
         </TableHeader>
 
         <TableBody>
-          {employeesData?.map((employee) => (
+          {employeesData?.map((employee: IEmployeeDetails) => (
             <TableRow className="text-center h-30" key={employee.id}>
-              <TableCell>{employee.id}</TableCell>
+              <TableCell className="text-xs lg:text-sm">
+                {employee.id}
+              </TableCell>
 
               <TableCell className="px-0 items-center flex justify-center">
                 <img
@@ -59,7 +62,7 @@ export default async function EmployeesPage() {
               </TableCell>
 
               <TableCell>
-                <ButtonEmployeeDetails />
+                <ButtonEmployeeDetails id={employee?.id} />
               </TableCell>
             </TableRow>
           ))}

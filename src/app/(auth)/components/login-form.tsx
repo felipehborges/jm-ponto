@@ -31,7 +31,7 @@ export default function LoginForm() {
     }
   })
 
-  const onSubmitHandler = async (data: LoginFormData) => {
+  async function onSubmitHandler(data: LoginFormData) {
     try {
       const userData = await loginAction({
         email: data.email,

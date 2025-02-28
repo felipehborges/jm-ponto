@@ -27,14 +27,14 @@ export default function UserClockForm() {
   const [rfIdInput, setRfIdInput] = useState('')
   const [selectedAction, setSelectedAction] = useState('clockedIn')
 
-  const handleChange = (event: { target: { value: string } }) => {
+  function handleChange(event: { target: { value: string } }) {
     setRfIdInput(event.target.value)
   }
 
-  const handleRfIdSubmit = async (event: {
+  async function handleRfIdSubmit(event: {
     key: string
     preventDefault: () => void
-  }) => {
+  }) {
     if (event.key === 'Enter') {
       event.preventDefault()
       const time = dayjs().utc().subtract(3, 'hour').toDate()
@@ -72,7 +72,7 @@ export default function UserClockForm() {
   }
 
   useEffect(() => {
-    const checkFocus = () => {
+    function checkFocus() {
       if (inputRef?.current && inputRef?.current !== document.activeElement)
         inputRef?.current.focus()
     }

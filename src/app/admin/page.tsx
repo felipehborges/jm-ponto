@@ -7,7 +7,7 @@ import {
   TableHeader,
   TableRow
 } from '@/components/ui/table'
-import { formatTime, today } from '@/lib/utils'
+import { convertISOToFormattedTime, today } from '@/lib/utils'
 import { LuHammer, LuSandwich, LuUsers, LuUserX } from 'react-icons/lu'
 import { apiAttendances } from '../api/attendances/route'
 import type { IAttendance } from '../api/attendances/types'
@@ -22,7 +22,7 @@ export default async function AdminPage() {
   const attendances = await apiAttendances.getAttendances()
   const attendancesData = attendances?.result
 
-  const todayAttendances = () => {
+  function todayAttendances() {
     const today = new Date().toISOString().split('T')[0] // 'YYYY-MM-DD'
 
     const todaysSchedules = Array.isArray(attendancesData)
@@ -32,7 +32,7 @@ export default async function AdminPage() {
     return todaysSchedules
   }
 
-  const employeesLunching = () => {
+  function employeesLunching() {
     const employees: IEmployee[] = []
 
     const todayAtts = todayAttendances()
@@ -47,7 +47,7 @@ export default async function AdminPage() {
     return employees
   }
 
-  const employeeStatus = (item: IAttendance) => {
+  function employeeStatus(item: IAttendance) {
     const clockedIn = item.clockedIn
     const lunchStart = item.lunchStart
     const lunchEnd = item.lunchEnd
@@ -66,15 +66,15 @@ export default async function AdminPage() {
   return (
     <div className="lg:flex w-full">
       <Card className="mx-4 mt-4 max-h-max">
-        <CardContent>
-          <CardHeader>
-            <CardTitle>
-              <div className="flex items-center justify-between">
-                <h2 className="mr-4">{`Hoje - ${today}`}</h2>
-              </div>
-            </CardTitle>
-          </CardHeader>
+        <CardHeader>
+          <CardTitle>
+            <div className="flex items-center justify-between">
+              <h2 className="mr-4">{`Hoje - ${today}`}</h2>
+            </div>
+          </CardTitle>
+        </CardHeader>
 
+        <CardContent>
           <Table>
             <TableHeader>
               <TableRow>
@@ -95,15 +95,17 @@ export default async function AdminPage() {
               {attendancesData?.map((attendance: IAttendance) => (
                 <TableRow key={attendance?.attendanceId}>
                   <TableCell>{attendance?.employee?.name}</TableCell>
-                  <TableCell>{formatTime(attendance?.clockedIn)}</TableCell>
                   <TableCell>
-                    {formatTime(attendance?.lunchStart || '')}
+                    {convertISOToFormattedTime(attendance?.clockedIn)}
                   </TableCell>
                   <TableCell>
-                    {formatTime(attendance?.lunchEnd || '')}
+                    {convertISOToFormattedTime(attendance?.lunchStart || '')}
                   </TableCell>
                   <TableCell>
-                    {formatTime(attendance?.clockedOut || '')}
+                    {convertISOToFormattedTime(attendance?.lunchEnd || '')}
+                  </TableCell>
+                  <TableCell>
+                    {convertISOToFormattedTime(attendance?.clockedOut || '')}
                   </TableCell>
                   <TableCell>{employeeStatus(attendance)}</TableCell>
                 </TableRow>

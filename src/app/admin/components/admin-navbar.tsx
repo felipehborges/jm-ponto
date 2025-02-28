@@ -35,7 +35,7 @@ export default function AdminNavbar() {
 
   return (
     <div
-      className={`w-full h-20 flex items-center justify-between px-4 bg-border transition-transform duration-500 mb-2 ${
+      className={`w-full h-20 flex items-center justify-between px-4 bg-border transition-transform duration-500 ${
         visible ? '' : '-translate-y-full'
       }`}
     >

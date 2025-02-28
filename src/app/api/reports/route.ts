@@ -1,8 +1,8 @@
-import type { GetReportProps } from './types'
+import type { GetReportProps, GetReportResponse } from './types'
 
 async function getReportPdf(props: GetReportProps) {
   const response = await fetch(
-    `${process.env.BASE_URL}/report/pdf/${props.initialDate}/${props.finalDate}/${props.rfid}`,
+    `${process.env.NEXT_PUBLIC_BASE_URL}/report/pdf/${props.initialDate}/${props.finalDate}/${props.rfid}`,
     {
       method: 'GET',
       headers: {
@@ -12,14 +12,16 @@ async function getReportPdf(props: GetReportProps) {
     }
   )
 
-  if (!response.ok) throw new Error('Failed to fetch report')
+  if (!response.ok) throw new Error('Erro ao gerar o relatório')
 
   return response.json()
 }
 
-async function getReportHttp(props: GetReportProps) {
+async function getReportHttp(
+  props: GetReportProps
+): Promise<GetReportResponse> {
   const response = await fetch(
-    `${process.env.BASE_URL}/report/${props.initialDate}/${props.finalDate}/${props.rfid}`,
+    `${process.env.NEXT_PUBLIC_BASE_URL}/report/${props.initialDate}/${props.finalDate}/${props.rfid}`,
     {
       method: 'GET',
       headers: {
@@ -29,7 +31,7 @@ async function getReportHttp(props: GetReportProps) {
     }
   )
 
-  if (!response.ok) throw new Error('Failed to fetch report')
+  if (!response.ok) throw new Error('Erro ao gerar o relatório')
 
   return response.json()
 }

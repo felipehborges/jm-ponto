@@ -39,13 +39,13 @@ export default function CreateDayOffDialog() {
     }
   })
 
-  const closeDialog = () => {
+  function closeDialog() {
     form.reset()
     apiDaysOff.getDaysOff()
     setIsOpen(false)
   }
 
-  const onSubmitHandler = async (data: DaysOffFormData) => {
+  async function onSubmitHandler(data: DaysOffFormData) {
     const dayOffData: CreateDayOffProps = {
       reason: data.dayOffName,
       date: data.dayOffDate.toISOString()
@@ -92,9 +92,11 @@ export default function CreateDayOffDialog() {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Day off</FormLabel>
+
                     <FormControl>
                       <Input placeholder="Nome do day off" {...field} />
                     </FormControl>
+
                     <FormMessage />
                   </FormItem>
                 )}
@@ -107,10 +109,12 @@ export default function CreateDayOffDialog() {
                   <FormItem>
                     <div className="flex flex-col gap-2 mt-4 w-full">
                       <FormLabel>Data</FormLabel>
+
                       <FormControl>
                         <DatePicker {...field} />
                       </FormControl>
                     </div>
+
                     <FormMessage />
                   </FormItem>
                 )}

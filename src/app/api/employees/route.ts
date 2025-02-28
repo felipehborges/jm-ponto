@@ -1,5 +1,6 @@
 import type {
   CreateEmployeeProps,
+  GetEmployeeByIdResponse,
   GetEmployeesResponse
 } from '@/app/api/employees/types'
 
@@ -17,7 +18,9 @@ async function getEmployees(): Promise<GetEmployeesResponse> {
   return response.json()
 }
 
-async function getEmployeeById(employeeId: string) {
+async function getEmployeeById(
+  employeeId: string
+): Promise<GetEmployeeByIdResponse> {
   const response = await fetch(
     `${process.env.BASE_URL}/employee/${employeeId}`,
     {
