@@ -15,7 +15,7 @@ export function cn(...inputs: ClassValue[]) {
 // }
 
 // 2099-12-31T10:00:00.000Z -> 31/12
-export function formatDayMonth(dateString: string): string {
+export function formatDayMonth(dateString: Date): string {
   const date = new Date(dateString)
   const month = String(date.getMonth() + 1).padStart(2, '0')
   const day = String(date.getDate()).padStart(2, '0')
@@ -23,7 +23,7 @@ export function formatDayMonth(dateString: string): string {
 }
 
 // 2099-12-31T10:00:00.000Z -> 31/12/2099
-export function formatTime(dateString: string): string {
+export function formatTime(dateString) {
   const date = new Date(dateString)
   if (Number.isNaN(date.getTime())) {
     return '-'

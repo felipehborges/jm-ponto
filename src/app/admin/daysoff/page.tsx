@@ -1,5 +1,6 @@
-import { apiDaysOff } from '@/app/api/days-off/route'
-import type { IDayOff } from '@/app/api/days-off/types'
+
+import type { IDayOff } from '@/app/api/daysoff/types'
+import { prisma } from '@/lib/prisma'
 import {
   Table,
   TableBody,
@@ -11,10 +12,12 @@ import {
 import { formatDayMonth } from '@/lib/utils'
 import CreateDayOffDialog from './components/add-dayoff-form'
 import DeleteDayOffButton from './components/delete-dayoff-button'
+import { getDayOffs } from '../../api/daysoff/api'
+
 
 export default async function DaysOffPage() {
-  const daysOff = await apiDaysOff.getDaysOff()
-  // TODO: refetch data after create or delete
+  const daysOff = await getDayOffs()
+
   return (
     <>
       <header className="w-full flex justify-center items-center pt-6 pb-8">
@@ -32,7 +35,7 @@ export default async function DaysOffPage() {
           </TableHeader>
 
           <TableBody>
-            {daysOff?.result?.map((dayoff: IDayOff) => (
+            {daysOff.map((dayoff) => (
               <TableRow key={dayoff?.id}>
                 <TableCell>{dayoff?.reason}</TableCell>
                 <TableCell>{formatDayMonth(dayoff?.date)}</TableCell>

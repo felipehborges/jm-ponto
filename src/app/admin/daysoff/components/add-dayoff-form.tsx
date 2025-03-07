@@ -1,7 +1,7 @@
 'use client'
 
-import { apiDaysOff } from '@/app/api/days-off/route'
-import type { CreateDayOffProps } from '@/app/api/days-off/types'
+import { apiDaysOff } from '@/app/api/daysoff/route'
+import type { CreateDayOffProps } from '@/app/api/daysoff/types'
 import { Button } from '@/components/ui/button'
 import { DatePicker } from '@/components/ui/date-picker'
 import {

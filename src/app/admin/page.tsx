@@ -1,4 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { prisma } from '../../lib/prisma'
 import {
   Table,
   TableBody,
@@ -16,17 +17,21 @@ import type { IEmployee } from '../api/employees/types'
 import AdminCard from './components/admin-card'
 
 export default async function AdminPage() {
-  const employees = await apiEmployees.getEmployees()
-  const employeesData = employees?.result
+  const employees = await prisma.employee.findMany()
+  const employeesData = employees
 
-  const attendances = await apiAttendances.getAttendances()
-  const attendancesData = attendances?.result
+  const attendances = await prisma.attendance.findMany({
+    include: {
+      employee: true
+    }
+  })
+  const attendancesData = attendances
 
   const todayAttendances = () => {
     const today = new Date().toISOString().split('T')[0] // 'YYYY-MM-DD'
 
     const todaysSchedules = Array.isArray(attendancesData)
-      ? attendancesData.filter((item) => item.clockedIn.startsWith(today))
+      ? attendancesData.filter((item) => item.clockedIn?.toISOString()?.startsWith(today))
       : [attendancesData]
 
     return todaysSchedules
@@ -38,7 +43,7 @@ export default async function AdminPage() {
     const todayAtts = todayAttendances()
 
     if (todayAtts) {
-      todayAtts.map((attendance: IAttendance) => {
+      todayAtts.map((attendance) => {
         if (attendance?.lunchStart && !attendance?.lunchEnd)
           employees.push(attendance?.employee)
       })
@@ -47,7 +52,7 @@ export default async function AdminPage() {
     return employees
   }
 
-  const employeeStatus = (item: IAttendance) => {
+  const employeeStatus = (item) => {
     const clockedIn = item.clockedIn
     const lunchStart = item.lunchStart
     const lunchEnd = item.lunchEnd
@@ -92,8 +97,8 @@ export default async function AdminPage() {
             </TableHeader>
 
             <TableBody>
-              {attendancesData?.map((attendance: IAttendance) => (
-                <TableRow key={attendance?.attendanceId}>
+              {attendancesData?.map((attendance) => (
+                <TableRow key={attendance?.id}>
                   <TableCell>{attendance?.employee?.name}</TableCell>
                   <TableCell>{formatTime(attendance?.clockedIn)}</TableCell>
                   <TableCell>

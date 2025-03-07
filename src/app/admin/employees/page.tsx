@@ -1,5 +1,6 @@
 import { apiEmployees } from '@/app/api/employees/route'
 import { Button } from '@/components/ui/button'
+import { prisma } from '@/lib/prisma'
 import { ButtonCopy } from '@/components/ui/button-copy'
 import {
   Table,
@@ -12,8 +13,8 @@ import {
 import ButtonEmployeeDetails from './components/button-employee-details'
 
 export default async function EmployeesPage() {
-  const employees = await apiEmployees.getEmployees()
-  const employeesData = employees.result
+  const employees = await prisma.employee.findMany()
+  const employeesData = employees
 
   return (
     <div className="mx-auto max-w-screen-sm pt-6 lg:max-w-screen-md xl:max-w-screen-lg 2xl:max-w-screen-xl transition-all duration-500 ease-in-out">

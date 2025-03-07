@@ -1,7 +1,7 @@
 'use client'
 
-import { apiDaysOff } from '@/app/api/days-off/route'
-import type { IDayOff } from '@/app/api/days-off/types'
+import { apiDaysOff } from '@/app/api/daysoff/route'
+import type { IDayOff } from '@/app/api/daysoff/types'
 import {
   AlertDialog,
   AlertDialogAction,

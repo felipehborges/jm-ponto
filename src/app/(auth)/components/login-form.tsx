@@ -33,18 +33,24 @@ export default function LoginForm() {
 
   const onSubmitHandler = async (data: LoginFormData) => {
     try {
-      const userData = await loginAction({
-        email: data.email,
-        password: data.password
-      })
+      const response = await fetch('/api/authenticate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: data.email, password: data.password })
+      });
 
-      toast.success('Login efetuado com sucesso!')
+      console.log(response)
+      if (!response.ok) throw new Error('Falha na autenticação');
 
-      userData.role === 'ADMIN' ? router.push('/admin') : router.push('/user')
+      const userData = await response.json();
+
+      toast.success('Login efetuado com sucesso!');
+      userData.role === 'ADMIN' ? router.push('/admin') : router.push('/user');
     } catch (error) {
-      toast.error(`Falha na autenticação: ${error}`)
+      toast.error(`Falha na autenticação: ${error}`);
     }
-  }
+  };
+
 
   return (
     <>
