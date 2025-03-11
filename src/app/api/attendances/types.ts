@@ -15,6 +15,7 @@ export interface IAttendance {
 }
 
 export interface GetAllAttendancesResponse {
+  map(arg0: (attendance: IAttendance) => import("react").JSX.Element): import("react").ReactNode
   result: IAttendance[]
   totalRegisters: number
   totalPages: number

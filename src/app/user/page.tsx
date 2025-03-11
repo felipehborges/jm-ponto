@@ -6,7 +6,7 @@ import {
   TableHeader,
   TableRow
 } from '@/components/ui/table'
-import { formatTime } from '@/lib/utils'
+import { convertISOToFormattedTime } from '@/lib/utils'
 import { apiAttendances } from '../api/attendances/route'
 import type { IAttendance } from '../api/attendances/types'
 import { Input } from '@/components/ui/input'
@@ -39,16 +39,16 @@ export default async function UserPage() {
               <TableRow key={attendance?.attendanceId}>
                 <TableCell>{attendance?.employee?.name}</TableCell>
                 <TableCell className="text-center">
-                  {formatTime(attendance?.clockedIn)}
+                  {convertISOToFormattedTime(attendance?.clockedIn)}
                 </TableCell>
                 <TableCell className="text-center">
-                  {formatTime(attendance?.lunchStart ?? '')}
+                  {convertISOToFormattedTime(attendance?.lunchStart ?? '')}
                 </TableCell>
                 <TableCell className="text-center">
-                  {formatTime(attendance?.lunchEnd ?? '')}
+                  {convertISOToFormattedTime(attendance?.lunchEnd ?? '')}
                 </TableCell>
                 <TableCell className="text-center">
-                  {formatTime(attendance?.clockedOut ?? '')}
+                  {convertISOToFormattedTime(attendance?.clockedOut ?? '')}
                 </TableCell>
               </TableRow>
             ))}

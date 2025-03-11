@@ -14,7 +14,9 @@ async function getAttendances(): Promise<GetAllAttendancesResponse> {
   return response.json()
 }
 
-async function getAttendancesByEmployeeId(employeeId: string) {
+async function getAttendancesByEmployeeId(
+  employeeId: string
+): Promise<GetAllAttendancesResponse> {
   const response = await fetch(
     `${process.env.BASE_URL}/attendances/employee/${employeeId}`,
     {

@@ -11,7 +11,7 @@ export default function UserNavbar() {
   const [visible, setVisible] = useState(true)
 
   useEffect(() => {
-    const handleScroll = () => {
+    function handleScroll() {
       const currentScrollY = window.scrollY
       setVisible(currentScrollY < lastScrollY || currentScrollY <= 0)
       setLastScrollY(currentScrollY)
