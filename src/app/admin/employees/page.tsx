@@ -15,7 +15,6 @@ import type { IEmployeeDetails } from '@/app/api/employees/types'
 
 export default async function EmployeesPage() {
   const employees = await prisma.employee.findMany()
-  const employeesData = employees
 
   return (
     <div className="pt-6 mx-auto max-w-screen 2xl:max-w-screen-xl transition-all duration-500 ease-in-out">
@@ -37,7 +36,7 @@ export default async function EmployeesPage() {
         </TableHeader>
 
         <TableBody>
-          {employeesData?.map((employee: IEmployeeDetails) => (
+          {employees?.map((employee: IEmployeeDetails) => (
             <TableRow className="text-center h-30" key={employee.id}>
               <TableCell className="text-xs lg:text-sm">
                 {employee.id}

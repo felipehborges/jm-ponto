@@ -18,7 +18,6 @@ import AdminCard from './components/admin-card'
 
 export default async function AdminPage() {
   const employees = await prisma.employee.findMany()
-  const employeesData = employees
 
   const attendances = await prisma.attendance.findMany({
     include: {
@@ -99,8 +98,8 @@ export default async function AdminPage() {
             </TableHeader>
 
             <TableBody>
-              {attendancesData?.map((attendance) => (
-                <TableRow key={attendance?.id}>
+              {attendancesData?.map((attendance: IAttendance) => (
+                <TableRow key={attendance?.attendanceId}>
                   <TableCell>{attendance?.employee?.name}</TableCell>
                   <TableCell>
                     {convertISOToFormattedTime(attendance?.clockedIn)}
@@ -124,7 +123,7 @@ export default async function AdminPage() {
 
       <section className="flex-wrap w-full flex p-2">
         <AdminCard
-          data={employeesData?.length}
+          data={employees?.length}
           icon={<LuUsers />}
           description="Total de funcionários"
         />
@@ -136,7 +135,7 @@ export default async function AdminPage() {
         />
 
         <AdminCard
-          data={(employeesData?.length ?? 0) - (todayAttendances?.length ?? 0)}
+          data={(employees?.length ?? 0) - (todayAttendances?.length ?? 0)}
           icon={<LuUserX />}
           description="Inconsistências"
         />

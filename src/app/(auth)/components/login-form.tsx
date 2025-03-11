@@ -37,20 +37,19 @@ export default function LoginForm() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: data.email, password: data.password })
-      });
+      })
 
       console.log(response)
-      if (!response.ok) throw new Error('Falha na autenticação');
+      if (!response.ok) throw new Error('Falha na autenticação')
 
-      const userData = await response.json();
+      const userData = await response.json()
 
-      toast.success('Login efetuado com sucesso!');
-      userData.role === 'ADMIN' ? router.push('/admin') : router.push('/user');
+      toast.success('Login efetuado com sucesso!')
+      userData.role === 'ADMIN' ? router.push('/admin') : router.push('/user')
     } catch (error) {
-      toast.error(`Falha na autenticação: ${error}`);
+      toast.error(`${error}`)
     }
-  };
-
+  }
 
   return (
     <>
@@ -111,16 +110,7 @@ export default function LoginForm() {
                 Conectando...
               </>
             ) : (
-              <>
-                {form.formState.isSubmitted ? (
-                  <>
-                    <LuCheck />
-                    Conectado
-                  </>
-                ) : (
-                  'Login'
-                )}
-              </>
+              'Login'
             )}
           </Button>
 
