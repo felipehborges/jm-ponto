@@ -1,6 +1,7 @@
 import { apiAttendances } from '@/app/api/attendances/route'
 import type { IAttendance } from '@/app/api/attendances/types'
 import { apiEmployees } from '@/app/api/employees/route'
+import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import {
   Table,
@@ -11,11 +12,23 @@ import {
   TableRow
 } from '@/components/ui/table'
 import {
-  formatSeconds,
+  convertISOToFormattedDate,
   convertISOToFormattedTime,
-  convertISOToFormattedDate
+  formatSeconds
 } from '@/lib/utils'
 import Image from 'next/image'
+import { LuSquarePen } from 'react-icons/lu'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger
+} from '@/components/ui/dialog'
+import { DatePicker } from '@/components/ui/date-picker'
+import EditEmployeeButton from './components/edit-employee-button'
+import EmployeeTable from './components/employee-table'
 
 interface EmployeesDetailsProps {
   params: {
@@ -47,81 +60,99 @@ export default async function EmployeeDetails({
   //   rfid: employee?.rfid
   // })
 
-  console.log(attendance)
-  // console.log(attendance)
-
   return (
-    <div className="flex flex-col gap-4">
-      <section className="w-full  flex justify-evenly my-10">
-        <div className="flex gap-4">
-          <Image
-            src={employee.imgUrl}
-            alt="employee"
-            width={220}
-            height={220}
-            className="rounded-lg shadow-md"
-          />
+    <div className="flex flex-col gap-4 overflow-hidden">
+      <section className="w-full flex flex-col my-4 gap-6">
+        <div className="flex justify-center gap-4 m-4">
+          <div className="w-80 flex justify-center items-center">
+            <Image
+              src={employee.imgUrl}
+              alt="employee"
+              width={220}
+              height={220}
+              className="rounded-lg shadow-md"
+            />
+          </div>
 
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-2 p-2 mt-4">
             <div className="flex gap-2">
               <strong>Nome: </strong>
               <p>{employee.name}</p>
             </div>
+
             <div className="flex gap-2">
               <strong>Cargo: </strong>
               <p>{employee.position}</p>
             </div>
+
             <div className="flex gap-2">
               <strong>Cartão RFID: </strong>
               <p>{employee.rfid}</p>
             </div>
+
             <div className="flex gap-2">
               <strong>ID: </strong>
               <p>{employee.id}</p>
             </div>
+
+            <div className="w-full mt-4 flex justify-center">
+              <EditEmployeeButton employee={employee} />
+            </div>
           </div>
         </div>
 
-        <div className="gap-4 flex justify-center items-center ">
-          <Card className="size-60 flex flex-col">
-            <CardHeader>
-              <CardTitle className="text-center text-lg">
+        <div className="gap-2 lg:gap-4 flex justify-center items-center">
+          <Card className="size-28 sm:size-38 md:size-45 lg:size-60 flex flex-col">
+            <CardHeader className="p-4 lg:p-6">
+              <CardTitle className="text-center text-sm md:text-base lg:text-lg">
                 Horas trabalhadas
               </CardTitle>
             </CardHeader>
-            <CardContent className="flex justify-center items-center text-base lg:text-5xl size-full">
+
+            <CardContent className="flex justify-center items-center text-base sm:text-xl md:text-3xl lg:text-5xl size-full">
+              {/* TODO: Estático */}
               34:12
               {/* {formatSeconds(report?.totalWorkedHours || 0)} */}
             </CardContent>
           </Card>
 
-          <Card className="size-60 flex flex-col">
-            <CardHeader>
-              <CardTitle className="text-center text-lg">
+          <Card className="size-28 sm:size-38 md:size-45 lg:size-60 flex flex-col">
+            <CardHeader className="p-4 lg:p-6">
+              <CardTitle className="text-center text-sm md:text-base lg:text-lg">
                 Horas extras
               </CardTitle>
             </CardHeader>
-            <CardContent className="flex justify-center items-center text-base lg:text-5xl size-full">
+
+            <CardContent className="flex justify-center items-center text-base sm:text-xl md:text-3xl lg:text-5xl size-full">
+              {/* TODO: Estático */}
               12:34
               {/* {formatSeconds(reports?.totalOvertime || 0)} */}
             </CardContent>
           </Card>
 
-          <Card className="size-60 flex flex-col">
-            <CardHeader>
-              <CardTitle className="text-center text-lg">Atrasos</CardTitle>
+          <Card className="size-28 sm:size-38 md:size-45 lg:size-60 flex flex-col">
+            <CardHeader className="p-4 lg:p-6">
+              <CardTitle className="text-center text-sm md:text-base lg:text-lg">
+                Atrasos
+              </CardTitle>
             </CardHeader>
-            <CardContent className="flex justify-center items-center text-base lg:text-5xl size-full">
+
+            <CardContent className="flex justify-center items-center text-base sm:text-xl md:text-3xl lg:text-5xl size-full">
+              {/* TODO: Estático */}
               34
               {/* {formatSeconds(reports?.totalDelay || 0)} */}
             </CardContent>
           </Card>
 
-          <Card className="size-60 flex flex-col">
-            <CardHeader>
-              <CardTitle className="text-center text-lg">Faltas</CardTitle>
+          <Card className="size-28 sm:size-38 md:size-45 lg:size-60 flex flex-col">
+            <CardHeader className="p-4 lg:p-6">
+              <CardTitle className="text-center text-sm md:text-base lg:text-lg">
+                Faltas
+              </CardTitle>
             </CardHeader>
-            <CardContent className="flex justify-center items-center text-base lg:text-5xl size-full">
+
+            <CardContent className="flex justify-center items-center text-base sm:text-xl md:text-3xl lg:text-5xl size-full">
+              {/* TODO: Estático */}
               12
               {/* {reports?.daysAbsences.length} */}
             </CardContent>
@@ -129,81 +160,17 @@ export default async function EmployeeDetails({
         </div>
       </section>
 
-      <section className="mx-auto lg:min-w-1/2">
-        <Table className="text-sm lg:text-lg">
-          <TableHeader>
-            <TableRow>
-              <TableHead className="text-center lg:w-60">Data</TableHead>
+      <Card className="m-4">
+        <CardHeader>
+          <CardTitle>Tabela</CardTitle>
+        </CardHeader>
 
-              <TableHead className="text-center">Entrada</TableHead>
-
-              <TableHead className="text-center">Saída</TableHead>
-
-              <TableHead className="text-center">Entrada</TableHead>
-
-              <TableHead className="text-center">Saída</TableHead>
-
-              <TableHead className="text-red-400 text-center">Atraso</TableHead>
-
-              <TableHead className="text-green-400 text-center">
-                Extra
-              </TableHead>
-
-              <TableHead className="text-blue-400 text-center">
-                Horas trabalhadas
-              </TableHead>
-            </TableRow>
-          </TableHeader>
-
-          <TableBody>
-            {attendance?.map((attendance: IAttendance) => (
-              <TableRow key={attendance?.attendanceId}>
-                <TableCell className="text-center">
-                  {convertISOToFormattedDate(attendance?.clockedIn)}
-                </TableCell>
-
-                <TableCell className="text-center">
-                  {attendance?.clockedIn
-                    ? convertISOToFormattedTime(attendance?.clockedIn)
-                    : '-'}
-                </TableCell>
-
-                <TableCell className="text-center">
-                  {attendance?.lunchStart
-                    ? convertISOToFormattedTime(attendance?.lunchStart)
-                    : '-'}
-                </TableCell>
-
-                <TableCell className="text-center">
-                  {attendance?.lunchEnd
-                    ? convertISOToFormattedTime(attendance?.lunchEnd)
-                    : '-'}
-                </TableCell>
-
-                <TableCell className="text-center">
-                  {attendance?.clockedOut
-                    ? convertISOToFormattedTime(attendance?.clockedOut)
-                    : '-'}
-                </TableCell>
-
-                <TableCell className="text-red-200 text-center">
-                  {attendance?.delay ? formatSeconds(attendance?.delay) : '-'}
-                </TableCell>
-
-                <TableCell className="text-green-200 text-center">
-                  {attendance.extraTime
-                    ? formatSeconds(attendance.extraTime)
-                    : '-'}
-                </TableCell>
-
-                <TableCell className="text-blue-200 text-center">
-                  {formatSeconds(attendance.hoursWorked)}
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </section>
+        <CardContent>
+          <section className="mx-auto lg:min-w-1/2">
+            <EmployeeTable attendances={attendance} employee={employee} />
+          </section>
+        </CardContent>
+      </Card>
     </div>
   )
 }
