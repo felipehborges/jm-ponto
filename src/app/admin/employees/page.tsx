@@ -1,17 +1,14 @@
-import { apiEmployees } from '@/app/api/employees/route'
-import { Button } from '@/components/ui/button'
-import { prisma } from '@/lib/prisma'
 import { ButtonCopy } from '@/components/ui/button-copy'
 import {
   Table,
-  TableHeader,
-  TableRow,
-  TableHead,
   TableBody,
-  TableCell
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow
 } from '@/components/ui/table'
+import { prisma } from '@/lib/prisma'
 import ButtonEmployeeDetails from './components/button-employee-details'
-import type { IEmployeeDetails } from '@/app/api/employees/types'
 
 export default async function EmployeesPage() {
   const employees = await prisma.employee.findMany()
@@ -36,7 +33,7 @@ export default async function EmployeesPage() {
         </TableHeader>
 
         <TableBody>
-          {employees?.map((employee: IEmployeeDetails) => (
+          {employees?.map((employee) => (
             <TableRow className="text-center h-30" key={employee.id}>
               <TableCell className="text-xs lg:text-sm">
                 {employee.id}

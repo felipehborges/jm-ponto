@@ -12,7 +12,7 @@ interface AdminCardProps {
 
 export default function AdminCard({ ...props }: AdminCardProps) {
   return (
-    <Card className="w-60 h-60 flex flex-col justify-between m-2">
+    <Card className="size-50 lg:size-60 flex flex-col justify-between m-2 border-4 text-base md:text-lg lg:text-xl">
       <CardHeader>
         <CardTitle>
           <div className="flex justify-between">
@@ -23,7 +23,7 @@ export default function AdminCard({ ...props }: AdminCardProps) {
       </CardHeader>
 
       <CardContent className="flex flex-col justify-end">
-        <h2>{props.description}</h2>
+        {props.description}
       </CardContent>
     </Card>
   )

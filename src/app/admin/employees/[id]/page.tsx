@@ -1,34 +1,11 @@
 import { apiAttendances } from '@/app/api/attendances/route'
-import type { IAttendance } from '@/app/api/attendances/types'
 import { apiEmployees } from '@/app/api/employees/route'
-import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow
-} from '@/components/ui/table'
-import {
-  convertISOToFormattedDate,
-  convertISOToFormattedTime,
-  formatSeconds
-} from '@/lib/utils'
 import Image from 'next/image'
-import { LuSquarePen } from 'react-icons/lu'
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger
-} from '@/components/ui/dialog'
-import { DatePicker } from '@/components/ui/date-picker'
+import BackButton from './components/back-button'
 import EditEmployeeButton from './components/edit-employee-button'
-import EmployeeTable from './components/employee-table'
+import { EmployeeAttendancesTable } from './employee-attendances-table/table'
+import { employeeAttendancesColumns } from './employee-attendances-table/table-columns'
 
 interface EmployeesDetailsProps {
   params: {
@@ -61,7 +38,9 @@ export default async function EmployeeDetails({
   // })
 
   return (
-    <div className="flex flex-col gap-4 overflow-hidden">
+    <div className="relative flex flex-col gap-4 overflow-hidden mb-10">
+      <BackButton />
+
       <section className="w-full flex flex-col my-4 gap-6">
         <div className="flex justify-center gap-4 m-4">
           <div className="w-80 flex justify-center items-center">
@@ -70,7 +49,7 @@ export default async function EmployeeDetails({
               alt="employee"
               width={220}
               height={220}
-              className="rounded-lg shadow-md"
+              className="rounded-lg shadow-md border-2 border-secondary"
             />
           </div>
 
@@ -160,17 +139,14 @@ export default async function EmployeeDetails({
         </div>
       </section>
 
-      <Card className="m-4">
-        <CardHeader>
-          <CardTitle>Tabela</CardTitle>
-        </CardHeader>
+      <section className="mx-auto lg:min-w-1/2">
+        <h1 className="font-bold text-xl p-4">Horários</h1>
 
-        <CardContent>
-          <section className="mx-auto lg:min-w-1/2">
-            <EmployeeTable attendances={attendance} employee={employee} />
-          </section>
-        </CardContent>
-      </Card>
+        <EmployeeAttendancesTable
+          columns={employeeAttendancesColumns}
+          data={Array.isArray(attendance) ? attendance : [attendance]}
+        />
+      </section>
     </div>
   )
 }
