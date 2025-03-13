@@ -1,6 +1,6 @@
 import { Skeleton } from '@/components/ui/skeleton'
 
-export default function EmployeesLoading() {
+export default function EmployeeDetailsLoading() {
   return (
     <div className="px-6 pt-4">
       <div className="flex max-w-1/2 mb-4 flex-col gap-2">

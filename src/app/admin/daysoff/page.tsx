@@ -1,4 +1,3 @@
-
 import type { IDayOff } from '@/app/api/daysoff/types'
 import { prisma } from '@/lib/prisma'
 import {
@@ -10,10 +9,9 @@ import {
   TableRow
 } from '@/components/ui/table'
 import { formatDayMonth } from '@/lib/utils'
-import CreateDayOffDialog from './components/add-dayoff-form'
+import CreateDayOffDialog from './components/add-dayoff-dialog'
 import DeleteDayOffButton from './components/delete-dayoff-button'
 import { getDayOffs } from '../../api/daysoff/api'
-
 
 export default async function DaysOffPage() {
   const daysOff = await getDayOffs()

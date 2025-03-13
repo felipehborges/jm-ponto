@@ -18,23 +18,21 @@ import AdminCard from './components/admin-card'
 
 export default async function AdminPage() {
   const employees = await prisma.employee.findMany()
-  const employeesData = employees
 
   const attendances = await prisma.attendance.findMany({
     include: {
       employee: true
     }
   })
-  const attendancesData = attendances
 
   function todayAttendances() {
     const today = new Date().toISOString().split('T')[0] // 'YYYY-MM-DD'
 
-    const todaysSchedules = Array.isArray(attendancesData)
-      ? attendancesData.filter((item) =>
+    const todaysSchedules = Array.isArray(attendances)
+      ? attendances.filter((item) =>
           item.clockedIn?.toISOString()?.startsWith(today)
         )
-      : [attendancesData]
+      : [attendances]
 
     return todaysSchedules
   }
@@ -54,7 +52,9 @@ export default async function AdminPage() {
     return employees
   }
 
-  function employeeStatus(item: IAttendance) {
+  // Prisma types are not matching IAttendance
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  function employeeStatus(item: any) {
     const clockedIn = item.clockedIn
     const lunchStart = item.lunchStart
     const lunchEnd = item.lunchEnd
@@ -71,18 +71,14 @@ export default async function AdminPage() {
   }
 
   return (
-    <div className="lg:flex w-full">
-      <Card className="mx-4 mt-4 max-h-max">
+    <div className="lg:flex w-full lg:p-10 p-4">
+      <Card className="mx-4 mt-4 max-h-max border-4">
         <CardHeader>
-          <CardTitle>
-            <div className="flex items-center justify-between">
-              <h2 className="mr-4">{`Hoje - ${today}`}</h2>
-            </div>
-          </CardTitle>
+          <CardTitle className="lg:text-xl">Hoje - {today}</CardTitle>
         </CardHeader>
 
         <CardContent>
-          <Table>
+          <Table className="lg:text-base">
             <TableHeader>
               <TableRow>
                 <TableHead className={employees && 'lg:min-w-50'}>
@@ -99,21 +95,32 @@ export default async function AdminPage() {
             </TableHeader>
 
             <TableBody>
-              {attendancesData?.map((attendance) => (
+              {attendances?.map((attendance) => (
                 <TableRow key={attendance?.id}>
                   <TableCell>{attendance?.employee?.name}</TableCell>
+
                   <TableCell>
-                    {convertISOToFormattedTime(attendance?.clockedIn)}
+                    {convertISOToFormattedTime(String(attendance?.clockedIn))}
                   </TableCell>
+
                   <TableCell>
-                    {convertISOToFormattedTime(attendance?.lunchStart || '')}
+                    {convertISOToFormattedTime(
+                      String(attendance?.lunchStart) || ''
+                    )}
                   </TableCell>
+
                   <TableCell>
-                    {convertISOToFormattedTime(attendance?.lunchEnd || '')}
+                    {convertISOToFormattedTime(
+                      String(attendance?.lunchEnd) || ''
+                    )}
                   </TableCell>
+
                   <TableCell>
-                    {convertISOToFormattedTime(attendance?.clockedOut || '')}
+                    {convertISOToFormattedTime(
+                      String(attendance?.clockedOut) || ''
+                    )}
                   </TableCell>
+
                   <TableCell>{employeeStatus(attendance)}</TableCell>
                 </TableRow>
               ))}
@@ -122,9 +129,9 @@ export default async function AdminPage() {
         </CardContent>
       </Card>
 
-      <section className="flex-wrap w-full flex p-2">
+      <section className="flex-wrap lg:flex-row-reverse lg:justify-start justify-center w-full flex p-2">
         <AdminCard
-          data={employeesData?.length}
+          data={employees?.length}
           icon={<LuUsers />}
           description="Total de funcionários"
         />
@@ -136,7 +143,7 @@ export default async function AdminPage() {
         />
 
         <AdminCard
-          data={(employeesData?.length ?? 0) - (todayAttendances?.length ?? 0)}
+          data={(employees?.length ?? 0) - (todayAttendances?.length ?? 0)}
           icon={<LuUserX />}
           description="Inconsistências"
         />

@@ -86,6 +86,9 @@ export default function AdminNavbar() {
           {pathname === '/admin' && 'Dashboard'}
           {pathname === '/admin/daysoff' && 'Days Off'}
           {pathname === '/admin/employees' && 'Funcionários'}
+          {pathname.startsWith('/admin/employees/') &&
+            pathname !== '/admin/employees/' &&
+            'Detalhes do funcionário'}
         </p>
 
         <div className="flex-1 flex justify-end">
